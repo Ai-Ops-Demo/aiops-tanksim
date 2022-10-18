@@ -3,8 +3,18 @@ Ai-Ops, Curriculum Lesson 1, Tank Simulator Code Base
 
 ## Project Objectives
 - Acquire training data and validation data
-- Build a Digital Twin of T-1 using Training Data, and Validate with Validation Data
-- Build a DQN Control Model for controlling LIC-101.
+  - This will be completed using the data generation script in **Step 1**, and will produce for you two (2) files.
+    - traindata.csv
+    - valdata.csv
+  - It is important to understand, that your site and/or process will likely already possess all the data you need. In practice, manufacturing your process data will not be required, instead you will use your site's exisitng historical data.
+- Build a Digital Twin **(AiPV)** of Level Process Value **(PV)** for Tank T-1 using Training Data, and then Validate with Validation Data
+- Build a DQN Control Model **(AiMV)** for controlling LIC-101
+
+## Tag and Extension Numbering Schemes
+Each Control System controller has three (3) extensions, which are listed below.  Each tag, and its extension are referenced with an ID that corresponds to its data's column number in the traindata.csv file.
+- PV: Process Variable (Input)
+- SV: Set Point Variable
+- MV: Manipulated Variable (Output)
 
 ![image](https://user-images.githubusercontent.com/84361913/196509969-769c6c33-8a7b-48b0-a4b8-87d3fbdaea4a.png)
 
