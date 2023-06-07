@@ -27,7 +27,7 @@
 # --------------------------------------------------------------------------------------
 # Ai-Ops, Inc. Digital Twin Builder LI101.AiPV for Lesson 1
 # www.ai-op.com
-# Copyright (C) 2020-2022, all rights reserved.
+# Copyright (C) 2020-2023, all rights reserved.
 # Licensed granted under Apache 2.0, See License File for details
 # --------------------------------------------------------------------------------------
 from lib_aiopsdigitaltwin import DigitalTwin

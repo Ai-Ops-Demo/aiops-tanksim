@@ -27,7 +27,7 @@
 # --------------------------------------------------------------------------------------
 # Ai-Ops, Inc. Data Generator for Lesson 1 - Tank Simulator
 # www.ai-op.com
-# Copyright (C) 2020-2022, all rights reserved.
+# Copyright (C) 2020-2023, all rights reserved.
 # Licensed granted under Apache 2.0, See License File for details
 # --------------------------------------------------------------------------------------
 from lib_aiopsdatagen import (
