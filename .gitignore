@@ -7,7 +7,8 @@ __pycache__/
 *.so
 
 # jpeg extensions
-*.jpeg
+*.jpg
+*.JPG
 
 # Distribution / packaging
 .Python
