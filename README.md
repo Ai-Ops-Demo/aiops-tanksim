@@ -1,5 +1,6 @@
 # Lesson 1 | aiops-tanksim
 Ai-Ops, Curriculum Lesson 1, Tank Simulator Code Base
+User's manual link is below.
 
 ## Equipment Needed
 - Windows OS (Windows 10)
@@ -34,5 +35,5 @@ Each Control System controller has three (3) extensions, which are listed below.
     - Linux x86_64
     - Windows AMD64
 
-## Step 1 - Generating the Training Data
+## The User's Manual - Lesson 1
 - [Go to Ai-Ops Lesson 1 Users Manual](https://ai-ops-inc.gitbook.io/ai-ops-tank-sim-users-guide/)
