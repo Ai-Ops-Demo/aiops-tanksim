@@ -7,7 +7,7 @@
 #             A:::::A                  O::::OOO::::O
 #            A:::::::A           iiiii O:::O   O:::Oppp   pppp       ssssss
 #           A::::A::::A          i:::i O::O     O::Op::pp::::::p    sS:::::s
-#          A::::A A::::A          i::i O::O     O::Op:::::::::::p ss::::::::spython
+#          A::::A A::::A          i::i O::O     O::Op:::::::::::p ss::::::::s
 #         A::::A   A::::A         i::i O::O     O::Opp:::ppppp:::ps:::ssss:::s
 #        A::::A     A::::A        i::i O::O     O::O p::p     p::p s::s  ssss
 #       A::::AAAAAAAAA::::A       i::i O::O     O::O p::p     p::p   s:::s
