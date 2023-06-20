@@ -1,6 +1,11 @@
 # Lesson 1 | aiops-tanksim
 Ai-Ops, Curriculum Lesson 1, Tank Simulator Code Base
 
+## Equipment Needed
+- Windows OS (Windows 10)
+- Linux OS
+- Functional CUDA drivers for Nvidia (if using GPU(s))
+  
 ## Project Objectives
 - Acquire training data and validation data
   - This will be completed using the data generation script in **Step 1**, and will produce for you two (2) files.
@@ -30,3 +35,4 @@ Each Control System controller has three (3) extensions, which are listed below.
     - Windows AMD64
 
 ## Step 1 - Generating the Training Data
+- [Go to Ai-Ops Lesson 1 Users Manual](https://ai-ops-inc.gitbook.io/ai-ops-tank-sim-users-guide/)
