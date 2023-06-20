@@ -1,6 +1,6 @@
 # Lesson 1 | aiops-tanksim
 Ai-Ops, Curriculum Lesson 1, Tank Simulator Code Base
-User's manual link is below.
+- [Go to Ai-Ops Lesson 1 Users Manual](https://ai-ops-inc.gitbook.io/ai-ops-tank-sim-users-guide/)
 
 ## Equipment Needed
 - Windows OS (Windows 10)
