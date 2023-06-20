@@ -35,6 +35,7 @@ from lib_aiopsdqn import (
     ReplayBuffer,
     Agent
     )
+from lib_aiopstrainagent import TrainAgentDQN
 import numpy as np
 import os
 import json
@@ -52,7 +53,7 @@ svIndex = 1
 mvIndex = 2
 
 # list relative path to digital twin experiment files
-dt = ['./LIC101.AiPV8890']
+dt = ['./LIC101.AiPV812']
 
 # what variables do you want the agent to see?
 # should see the PV,SV,and MV at a minimum.
@@ -201,124 +202,5 @@ agent.buildPolicy(
 # #############################___DQN___#######################################
 # ---------------------For Eposode 1, M do------------------------------------
 # #############################################################################
-scores = []
-moving_average = []
-episode = 0
-
-while agent.epsilon > agent.min_epsilon:
-    # reset score
-    score = 0
-
-    # reset simulator
-    state, done = sim.reset()
-
-    # initalize the first control position to be the
-    # same as the start of the episode data
-    control = state[
-     sim.agent_lookback-1,
-     sim.mvpos
-     ]
-
-    # execute the episode
-    while not done:
-
-        # select action
-        action = agent.selectAction(state)
-
-        # change controller with max action
-        control += agent.action_dict[action]
-
-        # keep controller from going past what the env has seen in training
-        control = np.clip(
-            control,
-            sim.mv_min,
-            sim.mv_max
-            )
-
-        # advance Environment with max action and get state_
-        state_, reward, done = sim.step(control)
-
-        # Store Transition
-        buff.storeTransition(
-            state,
-            action,
-            reward,state_
-            )
-
-        # Sample Mini Batch of Transitions
-        sample_s, sample_a, sample_r, sample_s_ = buff.sampleMiniBatch()
-
-        # fit Q
-        agent.qlearn(
-            sample_s,
-            sample_a,
-            sample_r,
-            sample_s_
-            )
-
-        # fit policy
-        agent.policyLearn(sample_s)
-
-        # advance state
-        state = state_
-
-        # get the score for the episode
-        score += reward
-
-    # save a history of episode scores
-    scores = np.append(scores, score)
-
-    if episode > 20:
-        avg = np.mean(scores[episode-20:episode])
-        if avg > max(moving_average):
-            print('saved best model')
-            agent.saveQ(model_dir+controller_name)
-
-            if agent.epsilon < 0.5:
-                agent.savePolicy(model_dir+controller_name)
-                agent.tflitePolicy(model_dir+controller_name)
-
-        moving_average.append(avg)
-
-    else:
-        moving_average.append(0)
-
-    # save replay buffer every 10 episodes
-    if episode % 10 == 0:
-        buff.saveEpisodes(model_dir+'replayBuffer.csv')
-
-    # print training episodes
-    print('episode_',
-          episode,
-          'score_',
-          round(score, 0),
-          ' average_',
-          round(moving_average[episode], 1),
-          ' epsilon_', round(agent.epsilon, 3))
-
-    episode += 1
-
-# Update config with max and min
-with open(model_dir + 'config.json',
-          'r') as config_file:
-    config = json.load(config_file)
-
-buff_min, buff_max = buff.get_min_max()
-
-min_training_range = {}
-for i in buff_min.index:
-    min_training_range[i] = str(buff_min[i])
-config['min_training_range'] = min_training_range
-
-max_training_range = {}
-for i in buff_max.index:
-    max_training_range[i] = str(buff_max[i])
-config['max_training_range'] = max_training_range
-
-with open(model_dir + 'config.json',
-          'w') as outfile:
-    json.dump(
-        config,
-        outfile,
-        indent=4
-        )
+trained_agent = TrainAgentDQN(agent, buff, sim, controller_name)
+trained_agent.train_dqn()
