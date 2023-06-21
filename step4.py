@@ -1,4 +1,4 @@
-
+''' ----------- Ai-Ops, Inc ----------------'''
 # ---------------------------------------------------------------------------------------
 #
 #                A                 ii       OOO
@@ -25,22 +25,25 @@
 #                                                    pppppp
 #
 # --------------------------------------------------------------------------------------
-# Ai-Ops, Inc. .H5 to .tflite Converter for Lesson 1
+# Ai-Ops, Inc. Control Model Validation LI101.AiMV for Lesson 1
 # www.ai-op.com
 # Copyright (C) 2020-2023, all rights reserved.
 # Licensed granted under Apache 2.0, See License File for details
 # --------------------------------------------------------------------------------------
-import tensorflow as tf
-from tensorflow.python.keras.models import load_model
+from lib_aiopsdqnvalidate import ValidateDQN
 
-model = load_model('LIC0101.AiMV4091/LIC0101.AiMV_policy.h5')
+data_dir = 'traindata.csv'
+val_file = 'valdata.csv'
 
-converter = tf.lite.TFLiteConverter.from_keras_model(model)
-converter.target_spec.supported_ops = [
-    tf.lite.OpsSet.TFLITE_BUILTINS,
-    tf.lite.OpsSet.SELECT_TF_OPS
-    ]
-# converter.experimental_new_converter = True
-tflite_model = converter.convert()
-with open('LIC0101.AiMV4091/LIC0101.AiMV_policy.tflite', 'wb') as f:
-    f.write(tflite_model)
+dt = ['./LIC101.AiPV']
+
+model_dir = './LIC0101.AiMV' + '/'
+modelname = 'LIC0101.AiMV_policy.tflite'
+
+
+# #############################___DQN___#######################################
+# ----------------------------- Validate -------------------------------------
+# #############################################################################
+validate_agent = ValidateDQN(data_dir=data_dir, val_file=val_file,
+                             dt=dt, model_dir=model_dir, modelname=modelname,
+                             val_length=2000)

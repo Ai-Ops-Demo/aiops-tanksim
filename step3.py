@@ -36,9 +36,8 @@ from lib_aiopsdqn import (
     Agent
     )
 from lib_aiopstrainagent import TrainAgentDQN
-import numpy as np
+from lib_aiopsbuildconfig import BuildConfigFile
 import os
-import json
 
 # prevent tf displaying text everytime it loads a model
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -53,7 +52,15 @@ svIndex = 1
 mvIndex = 2
 
 # list relative path to digital twin experiment files
-dt = ['./LIC101.AiPV812']
+dt = ['./LIC101.AiPV']
+
+# Variables List
+# 0 = Level Value		LIC101.PV
+# 1 = Level Setpoint	LIC101.SP
+# 2 = Level Output		LIC101.MV
+# 3 = Flow Input 1		FIC-1.PV
+# 4 = Flow Input 2		FIC-2.PV
+# 5 = Flow Input 3		FIC-3.PV
 
 # what variables do you want the agent to see?
 # should see the PV,SV,and MV at a minimum.
@@ -95,47 +102,24 @@ response_tolerance = 0.05
 # scanrate - scan rate that DT's were trained at.
 # velocity - have the output be a velocity model
 controller_name = 'LIC0101.AiMV'
-gamma = 0.95
-epsilon_decay = 0.99997
-max_step = 0.1
-scanrate = 5
-velocity = False
 
-# ---------------------config file--------------------------------------------
 # make a directory to save stuff in
-model_dir = controller_name + str(int(round(np.random.rand()*10000, 0))) + '/'
+model_dir = controller_name + '/'
 os.mkdir(model_dir)
 print(model_dir)
 
-# create a config file
-config = {}
-config['variables'] = {
-    'dependantVar': mvIndex,
-    'independantVars': agentIndex,
-    'velocity': velocity,
-    'targetmean': None,
-    'targetstd': None,
-    'agent_lookback': agent_lookback,
-    'scanrate': scanrate,
-    'svIndex': svIndex,
-    'pvIndex': pvIndex,
- }
+gamma = 0.95
+epsilon_decay = 0.99997
+max_step = 0.1
+scanrate = 1
+velocity = False
 
-config['epsilon_decay'] = epsilon_decay
-config['gamma'] = gamma
-config['svNoise'] = svNoise
-config['episode_length'] = episode_length
-config['max_step'] = max_step
-config['rewards'] = {
-    'general': general,
-    'stability': stability,
-    'stability_tolerance': stability_tolerance,
-    'response': response,
-    'response_tolerance': response_tolerance
-    }
-
-with open(model_dir + 'config.json', 'w') as outfile:
-    json.dump(config, outfile, indent=4)
+# ---------------------config file--------------------------------------------
+config_file = BuildConfigFile(model_dir,
+                              agentIndex, velocity, agent_lookback, scanrate,
+                              svIndex, pvIndex, mvIndex, svNoise,
+                              epsilon_decay, gamma, episode_length, max_step,
+                              general, stability, stability_tolerance, response, response_tolerance)
 
 # #####################################################################
 # ------------Initalize Simulator from trained Environment-------------
@@ -178,7 +162,7 @@ agent = Agent(
     default_agent=False,
     gamma=gamma,
     epsilon_decay=epsilon_decay,
-    min_epsilon=.980,
+    min_epsilon=0.20,
     max_step=max_step,
     scanrate=scanrate,
     velocity=velocity
@@ -203,4 +187,3 @@ agent.buildPolicy(
 # ---------------------For Eposode 1, M do------------------------------------
 # #############################################################################
 trained_agent = TrainAgentDQN(agent, buff, sim, controller_name)
-trained_agent.train_dqn()
