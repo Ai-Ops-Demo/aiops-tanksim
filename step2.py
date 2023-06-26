@@ -31,8 +31,11 @@
 # Licensed granted under Apache 2.0, See License File for details
 # --------------------------------------------------------------------------------------
 from lib_aiopsdigitaltwin import DigitalTwin
+from lib_aiopsbumpdt import BumpTest
 
 
+data_dir = 'traindata.csv'
+val_file = 'valdata.csv'
 dt_modelname = 'LIC101.AiPV'
 
 # Variables List
@@ -48,20 +51,25 @@ dt_lookback = 3
 scanrate = 1
 
 dt = DigitalTwin(
+    data_dir=data_dir,
+    val_file=val_file,
     dt_modelname=dt_modelname,
     dependantVar=dependantVar,
     independantVars=independantVars,
     dt_lookback=dt_lookback,
     scanrate=scanrate,
-    velocity=True
+    velocity=True,
+    isGRU=True
     )
 dt.trainDt(
-    gru1_dims=2,
+    gru1_dims=32,
     gru2_dims=32,
     lr=.001,
-    ep=20,
-    batch_size=5000)
+    ep=10,
+    batch_size=10000)
 dt.validate(
     max_len=500,
     num_val=6
     )
+
+bump_dt = BumpTest(dt_dir=dt_modelname, max_len=1000)

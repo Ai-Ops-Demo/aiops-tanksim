@@ -37,8 +37,8 @@ val_file = 'valdata.csv'
 
 dt = ['./LIC101.AiPV']
 
-model_dir = './LIC0101.AiMV' + '/'
-modelname = 'LIC0101.AiMV_policy.tflite'
+model_dir = './LIC101.AiMV' + '/'
+modelname = 'LIC101.AiMV_policy.tflite'
 
 
 # #############################___DQN___#######################################
@@ -46,4 +46,4 @@ modelname = 'LIC0101.AiMV_policy.tflite'
 # #############################################################################
 validate_agent = ValidateDQN(data_dir=data_dir, val_file=val_file,
                              dt=dt, model_dir=model_dir, modelname=modelname,
-                             val_length=2000)
+                             val_length=1000)

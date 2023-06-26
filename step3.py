@@ -77,7 +77,7 @@ agentIndex = [
 agent_lookback = 3
 
 # about 2-3x as long as the system needs to respond to SP change
-episode_length = 20
+episode_length = 500
 
 # add some noise to the SV to help with simulating responses.
 svNoise = 0
@@ -90,9 +90,9 @@ svNoise = 0
 # response_tolerance - within this tolerance (tiered scheme)
 general = 1
 stability = 1
-stability_tolerance = 0.003
+stability_tolerance = 0.0001
 response = 1
-response_tolerance = 0.05
+response_tolerance = 0.10
 
 # --------------------Variables for Agent-----------------------
 # controller_name - name of DT file/folder
@@ -101,16 +101,16 @@ response_tolerance = 0.05
 # max_step - how much can the agent move each timestep
 # scanrate - scan rate that DT's were trained at.
 # velocity - have the output be a velocity model
-controller_name = 'LIC0101.AiMV'
+controller_name = 'LIC101.AiMV'
 
 # make a directory to save stuff in
 model_dir = controller_name + '/'
 os.mkdir(model_dir)
 print(model_dir)
 
-gamma = 0.95
+gamma = 0.99
 epsilon_decay = 0.99997
-max_step = 0.1
+max_step = 0.05
 scanrate = 1
 velocity = False
 
@@ -170,7 +170,7 @@ agent = Agent(
 
 # you have the option to explore with a PID controller,
 # or comment out for random exploration
-# agent.PID(100,10,0,pvIndex,svIndex,scanrate=scanrate)
+agent.PID(100,10,0,pvIndex,svIndex,scanrate=scanrate)
 
 agent.buildQ(
     fc1_dims=128,
